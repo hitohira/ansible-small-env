@@ -1,0 +1,16 @@
+---
+- name: deploy httpd server
+  hosts: node
+  become: yes
+  gather_facts: no
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd
+        state: latest
+
+    - name: start & enabled httpd
+      service:
+        name: httpd
+        state: started
+        enabled: yes

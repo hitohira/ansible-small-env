@@ -1,0 +1,30 @@
+x-node: &node
+  build: ./node
+  privileged: true
+  command: /sbin/init
+  tty: true
+
+services:
+  ansible:
+    container_name: 'ansible'
+    build: ./ansible
+    tty: true
+    working_dir: '/root'
+    volumes:
+      - ./work:/home/ansible/work
+
+  node01:
+    container_name: node01
+    <<: *node
+    ports:
+      - '8081:80'
+  node02:
+    container_name: node02
+    <<: *node
+    ports:
+      - '8082:80'
+  node03:
+    container_name: node03
+    <<: *node
+    ports:
+      - '8083:80'
