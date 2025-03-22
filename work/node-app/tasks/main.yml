@@ -1,0 +1,18 @@
+---
+- name: install npm
+  yum:
+    name: npm
+    state: present
+
+- name: Create a systemd service file
+  template:
+    src: node-app.service.j2
+    dest: /etc/systemd/system/node-app.service
+  notify:
+    - Reload systemd to apply changes
+
+- name: Enable the Node.js service
+  systemd:
+    name: node-app
+    enabled: yes
+    state: started

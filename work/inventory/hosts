@@ -1,0 +1,12 @@
+[node]
+node01
+node02
+node03
+
+[proxy]
+nginx
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_user=ansible
+ansible_ssh_private_key_file=/home/ansible/.ssh/id_rsa

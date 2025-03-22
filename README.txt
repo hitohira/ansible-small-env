@@ -25,7 +25,7 @@ cd work
 ./ssh-setting.sh
 
 # ansibleのプレイブックを実行
-ansible-playbook node-playbook.yml
+ansible-playbook playbooks/site.yml
 
 # コンテナの停止(ansibleサーバからexitした後）
 sudo docker compose down

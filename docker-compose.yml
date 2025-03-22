@@ -17,14 +17,27 @@ services:
     container_name: node01
     <<: *node
     ports:
-      - '8081:80'
+      - '8081:8081'
+    volumes:
+      - ./app:/opt/app
   node02:
     container_name: node02
     <<: *node
     ports:
-      - '8082:80'
+      - '8082:8082'
+    volumes:
+      - ./app:/opt/app
   node03:
     container_name: node03
     <<: *node
     ports:
-      - '8083:80'
+      - '8083:8083'
+    volumes:
+      - ./app:/opt/app
+
+  nginx:
+    container_name: nginx
+    <<: *node
+    ports:
+      - '8080:80'
+

@@ -1,0 +1,24 @@
+★ 設計
+
+■サーバ構成
+ansible: Ansibleサーバ
+node01: アプリケーションサーバ1
+node02: アプリケーションサーバ2
+node03: アプリケーションサーバ3
+lb: ロードバランサ
+
+■ポート構成
+node01:8081
+node02:8082
+node03:8083
+nginx:8080 (docker内では80番で8080にマッピングする)
+
+■導入ソフトウェア(ansible構成に必要なものを除く）
+
+node0x:
+  nodejs: アプリケーションを作成。
+	        http://localhost:<port>?data=XXXでアクセス
+
+nginx:
+  nginx: プロキシサーバとして立てる。node0xをプールする
+         http://localhost:8080?data=XXXでアクセス

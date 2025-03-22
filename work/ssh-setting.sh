@@ -1,5 +1,9 @@
 #!/bin/bash
 
+get_hosts(){
+ echo $(awk "/\[$1\]/{flag=1; next} flag && NF {print} !NF{flag=0}" /home/ansible/work/inventory/hosts)
+}
+
 # check exec user
 if [[ $(whoami) != "ansible" ]]; then
   echo "ERROR: user is not ansible.[$(whoami)]"
@@ -16,7 +20,9 @@ chmod 600 /home/ansible/.ssh/id_rsa
 chmod 644 /home/ansible/.ssh/id_rsa.pub
 
 # get ansible taget node from hosts file
-HOST_LIST=$(awk '/\[node\]/{flag=1; next} flag && NF {print} !NF{flag=0}' /home/ansible/work/hosts)
+HOST_LIST_NODE=$(get_hosts "node")
+HOST_LIST_NGINX=$(get_hosts "proxy")
+HOST_LIST="$HOST_LIST_NODE $HOST_LIST_NGINX"
 echo "INFO: target nodes are"
 echo "$HOST_LIST"
 

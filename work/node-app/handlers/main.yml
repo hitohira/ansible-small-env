@@ -1,0 +1,9 @@
+---
+- name: Reload systemd to apply changes
+  command: systemctl daemon-reload
+
+- name: Enable the Node.js service
+  systemd:
+    name: node-app
+    enabled: yes
+    state: started

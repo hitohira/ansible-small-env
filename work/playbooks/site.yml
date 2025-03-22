@@ -1,0 +1,17 @@
+---
+- hosts: all
+  tasks:
+    - name: Debug variables
+      ansible.builtin.debug:
+        var: app_port
+
+- hosts: node
+  become: true
+  roles:
+    - node-app
+
+- hosts: proxy
+  become: true
+  roles:
+    - nginx
+

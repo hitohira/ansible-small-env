@@ -1,0 +1,16 @@
+[Unit]
+Description=Node.js Application
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/node /opt/app/index.js {{ app_port }}
+Restart=always
+User=nobody
+Group=nobody
+Environment=NODE_ENV=production
+WorkingDirectory=/opt/app
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
