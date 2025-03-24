@@ -1,15 +1,14 @@
 ansible環境の簡単セットアップ
 
 ■作成されるもの
-1台のansibleサーバと3台のhttpサーバ
-3台はポート8081,8082,8083からWebブラウザでアクセス可能になる
+1台のansibleサーバと3台のNode.jsアプリサーバとリバースプロキシサーバ
+3台のアプリサーバはポート8081,8082,8083からWebブラウザでアクセス可能になる
+リバースプロキシサーバはロードバランサとして動作し、アプリサーバにリクエストを振り分ける。ポート8080でアクセス可能。
+design.txtも参照。
 
 ■手順
-# イメージのビルド
+# イメージのビルド (キャッシュをクリアする場合は--no-cacheをつける）
  sudo docker compose build
-
-## イメージのビルド時にキャッシュを無効化して最新のパッケージを使う場合
-sudo docker compose build --no-cache
 
 # コンテナの起動
 sudo docker compose up -d
@@ -20,7 +19,7 @@ sudo docker compose exec ansible bash
 # ansibleサーバ内でansibleユーザにスイッチ
 su - ansible
 
-# ターゲットノードのssh設定を行う(fingerprint取得と公開鍵転送）
+# ターゲットノードのssh設定を行う(fingerprint取得と公開鍵転送のスクリプト）
 cd work
 ./ssh-setting.sh
 
@@ -34,8 +33,8 @@ sudo docker compose down
 sudo docker image prune
 
 ■注意事項
-・work/hostsにnodesを追加する際は、[all:vars]の前に空行を入れること
-　→ssh-setting.shでは[nodes]以降空行前のnode名に対してsshの設定を行っている
+・work/inventory/hostsにnodeを追加する際は、ssh-setting.shも編集して公開鍵設定対象を追加すること
+　→現在は[node]から空行までと[proxy]から空行までに記載のhost名を取得して鍵設定を行っている
 
 
 ■参考ページ
